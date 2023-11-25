@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('build') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/manjumanjrekar/sBoot.git']]])
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('build docker image') {
+            steps {
+                script {
+                    sh 'docker build -t manju:1.0 .'
+                }
+            }
+        }
+stage('push image to Hub'){
+steps{
+script{
+     withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+           sh 'docker login --username ashoksangavi1100 -p ${dockerhubpwd}'
+            sh 'docker push ashoksangavi1100/manju:1.0'
+}
+
+    }
+}
+}
+
+ }
+}
+
