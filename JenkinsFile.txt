@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/manjumanjrekar/sBoot.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Ashok-1100/Repo-2.git']]])
                 sh 'mvn clean install'
             }
         }
@@ -12,7 +12,7 @@ pipeline {
         stage('build docker image') {
             steps {
                 script {
-                    sh 'docker build -t manju:1.0 .'
+                    sh 'docker build -t ashoks:5.0 .'
                 }
             }
         }
@@ -21,7 +21,7 @@ steps{
 script{
      withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
            sh 'docker login --username ashoksangavi1100 -p ${dockerhubpwd}'
-            sh 'docker push ashoksangavi1100/manju:1.0'
+            sh 'docker push ashoksangavi1100/ashoks:5.0'
 }
 
     }
