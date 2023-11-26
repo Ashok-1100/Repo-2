@@ -12,7 +12,7 @@ pipeline {
         stage('build docker image') {
             steps {
                 script {
-                    sh 'docker build -t ashoks:5.0 .'
+                    sh 'docker build -t cicdimage:1.0 .'
                 }
             }
         }
@@ -21,7 +21,7 @@ steps{
 script{
      withCredentials([string(credentialsId: 'DockerHub', variable: 'DockerHub')]) {
            sh 'docker login --username ashoksangavi1100 -p ${DockerHub}'
-            sh 'docker push ashoksangavi1100/ashoks:5.0'
+            sh 'docker push ashoksangavi1100/cicdimage:1.0'
 }
 
     }
